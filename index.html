@@ -112,24 +112,23 @@
 
         #resultBox {
             margin-top: 20px;
-            padding: 25px 20px;
             border-radius: 5px;
             font-size: 16px;
             text-align: center;
             display: none;
             margin-bottom: 20px;
-            position: relative;
         }
 
         .result-title {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: inherit;
-            padding: 0 15px;
             font-weight: bold;
             font-size: 18px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 15px;
+        }
+
+        .result-content {
+            padding: 0 20px 20px 20px;
         }
 
         .green-result {
@@ -140,6 +139,10 @@
         .yellow-result {
             background-color: #ffd700;
             color: black;
+        }
+
+        .yellow-result .result-title {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.3);
         }
 
         .red-result {
@@ -204,7 +207,7 @@
         </div>
         <div id="resultBox">
             <div class="result-title">Resposta</div>
-            <div id="resultText"></div>
+            <div class="result-content" id="resultText"></div>
         </div>
     </div>
 
