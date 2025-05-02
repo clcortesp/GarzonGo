@@ -21,7 +21,7 @@
             padding: 20px;
         }
 
-        .questionnaire-form {
+        .wrapper {
             max-width: 800px;
             width: 100%;
             position: relative;
@@ -137,7 +137,7 @@
     </style>
 </head>
 <body>
-    <div class="questionnaire-form">
+    <div class="wrapper">
         <div class="title">Qüestionari</div>
         <div class="container">
             <div class="header">
@@ -146,64 +146,69 @@
                 <span>Sí</span>
             </div>
             
-            <form id="questionForm">
-                <div class="question">
-                    <div class="question-number">1</div>
-                    <div class="question-text">Alguna vegada sents que hauries de restringir la teva conducta de joc d'atzar?</div>
-                    <div class="options">
-                        <input type="radio" name="q1" value="1" required>
-                        <input type="radio" name="q1" value="2">
-                    </div>
+            <div class="question">
+                <div class="question-number">1</div>
+                <div class="question-text">Alguna vegada sents que hauries de restringir la teva conducta de joc d'atzar?</div>
+                <div class="options">
+                    <input type="radio" name="q1" value="1" required>
+                    <input type="radio" name="q1" value="2">
                 </div>
-                
-                <div class="question">
-                    <div class="question-number">2</div>
-                    <div class="question-text">Alguna vegada t'irriten les observacions de les altres persones sobre la teva condcuta amb els jocs d'atzar?</div>
-                    <div class="options">
-                        <input type="radio" name="q2" value="1" required>
-                        <input type="radio" name="q2" value="2">
-                    </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">2</div>
+                <div class="question-text">Alguna vegada t'irriten les observacions de les altres persones sobre la teva condcuta amb els jocs d'atzar?</div>
+                <div class="options">
+                    <input type="radio" name="q2" value="1" required>
+                    <input type="radio" name="q2" value="2">
                 </div>
-                
-                <div class="question">
-                    <div class="question-number">3</div>
-                    <div class="question-text">Alguna vegada et sents culpable sobre alguna cosa que has fet quan jugaves?</div>
-                    <div class="options">
-                        <input type="radio" name="q3" value="1" required>
-                        <input type="radio" name="q3" value="2">
-                    </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">3</div>
+                <div class="question-text">Alguna vegada et sents culpable sobre alguna cosa que has fet quan jugaves?</div>
+                <div class="options">
+                    <input type="radio" name="q3" value="1" required>
+                    <input type="radio" name="q3" value="2">
                 </div>
-                
-                <div class="question">
-                    <div class="question-number">4</div>
-                    <div class="question-text">Alguna vegada, quan et lleves, vols començar a jugar inmediataments per sentir-te millor?</div>
-                    <div class="options">
-                        <input type="radio" name="q4" value="1" required>
-                        <input type="radio" name="q4" value="2">
-                    </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">4</div>
+                <div class="question-text">Alguna vegada, quan et lleves, vols començar a jugar inmediataments per sentir-te millor?</div>
+                <div class="options">
+                    <input type="radio" name="q4" value="1" required>
+                    <input type="radio" name="q4" value="2">
                 </div>
-                
-                <div class="button-container">
-                    <button type="submit" class="submit-button">Veure resposta</button>
-                </div>
-            </form>
+            </div>
+            
+            <div class="button-container">
+                <button onclick="calculateResult()" class="submit-button">Veure resposta</button>
+            </div>
         </div>
         <div id="resultBox"></div>
     </div>
 
     <script>
-        document.getElementById('questionForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
+        function calculateResult() {
             let total = 0;
             const questions = ['q1', 'q2', 'q3', 'q4'];
             
+            // Verificar que todas las preguntas estén respondidas
+            let allAnswered = true;
             questions.forEach(question => {
                 const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
-                if (selectedOption) {
+                if (!selectedOption) {
+                    allAnswered = false;
+                } else {
                     total += parseInt(selectedOption.value);
                 }
             });
+
+            if (!allAnswered) {
+                alert("Si us plau, respon totes les preguntes.");
+                return;
+            }
 
             const resultBox = document.getElementById('resultBox');
             resultBox.style.display = 'block';
@@ -221,7 +226,7 @@
                 resultBox.className = 'red-result';
                 resultBox.textContent = "Compte! La teva conducta de joc pot ser problemàtica. Demana ajuda!";
             }
-        });
+        }
     </script>
 </body>
 </html>
