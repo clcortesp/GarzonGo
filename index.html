@@ -112,12 +112,24 @@
 
         #resultBox {
             margin-top: 20px;
-            padding: 15px 20px;
+            padding: 25px 20px;
             border-radius: 5px;
             font-size: 16px;
             text-align: center;
             display: none;
             margin-bottom: 20px;
+            position: relative;
+        }
+
+        .result-title {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: inherit;
+            padding: 0 15px;
+            font-weight: bold;
+            font-size: 18px;
         }
 
         .green-result {
@@ -190,7 +202,10 @@
                 <button onclick="calculateResult()" class="submit-button">Veure resposta</button>
             </div>
         </div>
-        <div id="resultBox"></div>
+        <div id="resultBox">
+            <div class="result-title">Resposta</div>
+            <div id="resultText"></div>
+        </div>
     </div>
 
     <!-- Formulario oculto para la integración -->
@@ -224,28 +239,29 @@
             }
 
             const resultBox = document.getElementById('resultBox');
+            const resultText = document.getElementById('resultText');
             resultBox.style.display = 'block';
             
             // Eliminar clases anteriores
             resultBox.classList.remove('green-result', 'yellow-result', 'red-result');
             
-            let resultText = '';
+            let responseText = '';
 
             if (total === 4) {
                 resultBox.className = 'green-result';
-                resultText = `Es pot considerar que la teva pràctica del joc és saludable. Si continues jugant d'aquesta manera i practicant el joc com una forma d'oci, els jocs d'atzar no et suposaran cap risc.`;
+                responseText = `Es pot considerar que la teva pràctica del joc és saludable. Si continues jugant d'aquesta manera i practicant el joc com una forma d'oci, els jocs d'atzar no et suposaran cap risc.`;
             } else if (total === 5) {
                 resultBox.className = 'yellow-result';
-                resultText = `Es pot considerar que tens certa tendencia a córrer riscos innecessaris en els jocs d'atzar. En el numero de Salut Respon (061) pots demanar informació sobre especialistes que t'ajudaran a mantenir l'hàbit del joc dins uns marges saludables.`;
+                responseText = `Es pot considerar que tens certa tendencia a córrer riscos innecessaris en els jocs d'atzar. En el numero de Salut Respon (061) pots demanar informació sobre especialistes que t'ajudaran a mantenir l'hàbit del joc dins uns marges saludables.`;
             } else if (total >= 6 && total <= 8) {
                 resultBox.className = 'red-result';
-                resultText = `És probable que la teva pràctica del joc et porti a tenir problemes de control de l'hàbit de jugar. En el número de telèfon de Salut Respon (061) pots obtenir informació sobre especialistes que t'ajudaran a entendre i resoldre els problemes que et sorgeixin en relació als jocs d'atzar.`;
+                responseText = `És probable que la teva pràctica del joc et porti a tenir problemes de control de l'hàbit de jugar. En el número de telèfon de Salut Respon (061) pots obtenir informació sobre especialistes que t'ajudaran a entendre i resoldre els problemes que et sorgeixin en relació als jocs d'atzar.`;
             }
 
-            resultBox.textContent = resultText;
+            resultText.textContent = responseText;
 
             // Completar y enviar el formulario de integración
-            document.getElementById('Respuesta__c').value = resultText;
+            document.getElementById('Respuesta__c').value = responseText;
             document.getElementById('integrationForm').submit();
         }
     </script>
