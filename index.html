@@ -218,13 +218,21 @@
             
             if (total === 4) {
                 resultBox.className = 'green-result';
-                resultBox.textContent = "No hi ha cap problema amb el joc. Segueix així!";
+                resultBox.textContent = `Es pot considerar que la teva pràctica del joc és saludable. Si continues jugant
+d'aquesta manera i practicant el joc com una forma d'oci, els jocs d'atzar no et
+suposaran cap risc.`;
             } else if (total === 5) {
                 resultBox.className = 'yellow-result';
-                resultBox.textContent = "Vigila! Potser hauries de controlar una mica més la teva conducta de joc.";
+                resultBox.textContent = `Es pot considerar que tens certa tendencia a córrer riscos innecessaris en els
+jocs d'atzar. En el numero de Salut Respon (061) pots demanar informació
+sobre especialistes que t'ajudaran a mantenir l'hàbit del joc dins uns marges
+saludables.`;
             } else if (total >= 6 && total <= 8) {
                 resultBox.className = 'red-result';
-                resultBox.textContent = "Compte! La teva conducta de joc pot ser problemàtica. Demana ajuda!";
+                resultBox.textContent = `És probable que la teva pràctica del joc et porti a tenir problemes de control
+de l'hàbit de jugar. En el número de telèfon de Salut Respon (061) pots obtenir
+informació sobre especialistes que t'ajudaran a entendre i resoldre els
+problemes que et sorgeixin en relació als jocs d'atzar.`;
             }
         }
     </script>
