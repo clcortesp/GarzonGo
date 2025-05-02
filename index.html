@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Qüestionari</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
         * {
             margin: 0;
@@ -153,6 +154,19 @@
         .hidden-form {
             display: none;
         }
+
+        .recaptcha-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .button-and-captcha {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 20px;
+        }
     </style>
 </head>
 <body>
@@ -201,7 +215,10 @@
                 </div>
             </div>
             
-            <div class="button-container">
+            <div class="button-and-captcha">
+                <div class="recaptcha-container">
+                    <div class="g-recaptcha" data-sitekey="6LeUAicrAAAAAFZgO4WGluZ0FZKYVp8iI5g9XhrF"></div>
+                </div>
                 <button onclick="calculateResult()" class="submit-button">Veure resposta</button>
             </div>
         </div>
@@ -222,10 +239,16 @@
 
     <script>
         function calculateResult() {
+            // Verificar el reCAPTCHA
+            const recaptchaResponse = grecaptcha.getResponse();
+            if (!recaptchaResponse) {
+                alert("Si us plau, completa el captcha.");
+                return;
+            }
+
             let total = 0;
             const questions = ['q1', 'q2', 'q3', 'q4'];
             
-            // Verificar que todas las preguntas estén respondidas
             let allAnswered = true;
             questions.forEach(question => {
                 const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
@@ -245,7 +268,6 @@
             const resultText = document.getElementById('resultText');
             resultBox.style.display = 'block';
             
-            // Eliminar clases anteriores
             resultBox.classList.remove('green-result', 'yellow-result', 'red-result');
             
             let responseText = '';
