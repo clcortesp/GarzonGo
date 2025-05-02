@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="esp">
+<html lang="ca">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,7 @@
             padding: 20px;
         }
 
-        .wrapper {
+        .questionnaire-form {
             max-width: 800px;
             width: 100%;
             position: relative;
@@ -109,10 +109,35 @@
         .submit-button:hover {
             background: #1b5e20;
         }
+
+        #resultBox {
+            margin-top: 20px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .green-result {
+            background-color: #2e7d32;
+            color: white;
+        }
+
+        .yellow-result {
+            background-color: #ffd700;
+            color: black;
+        }
+
+        .red-result {
+            background-color: #ff0000;
+            color: white;
+        }
     </style>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="questionnaire-form">
         <div class="title">Qüestionari</div>
         <div class="container">
             <div class="header">
@@ -121,13 +146,13 @@
                 <span>Sí</span>
             </div>
             
-            <form>
+            <form id="questionForm">
                 <div class="question">
                     <div class="question-number">1</div>
                     <div class="question-text">Alguna vegada sents que hauries de restringir la teva conducta de joc d'atzar?</div>
                     <div class="options">
-                        <input type="radio" name="q1" value="no">
-                        <input type="radio" name="q1" value="si">
+                        <input type="radio" name="q1" value="1" required>
+                        <input type="radio" name="q1" value="2">
                     </div>
                 </div>
                 
@@ -135,8 +160,8 @@
                     <div class="question-number">2</div>
                     <div class="question-text">Alguna vegada t'irriten les observacions de les altres persones sobre la teva condcuta amb els jocs d'atzar?</div>
                     <div class="options">
-                        <input type="radio" name="q2" value="no">
-                        <input type="radio" name="q2" value="si">
+                        <input type="radio" name="q2" value="1" required>
+                        <input type="radio" name="q2" value="2">
                     </div>
                 </div>
                 
@@ -144,8 +169,8 @@
                     <div class="question-number">3</div>
                     <div class="question-text">Alguna vegada et sents culpable sobre alguna cosa que has fet quan jugaves?</div>
                     <div class="options">
-                        <input type="radio" name="q3" value="no">
-                        <input type="radio" name="q3" value="si">
+                        <input type="radio" name="q3" value="1" required>
+                        <input type="radio" name="q3" value="2">
                     </div>
                 </div>
                 
@@ -153,8 +178,8 @@
                     <div class="question-number">4</div>
                     <div class="question-text">Alguna vegada, quan et lleves, vols començar a jugar inmediataments per sentir-te millor?</div>
                     <div class="options">
-                        <input type="radio" name="q4" value="no">
-                        <input type="radio" name="q4" value="si">
+                        <input type="radio" name="q4" value="1" required>
+                        <input type="radio" name="q4" value="2">
                     </div>
                 </div>
                 
@@ -163,6 +188,40 @@
                 </div>
             </form>
         </div>
+        <div id="resultBox"></div>
     </div>
+
+    <script>
+        document.getElementById('questionForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            let total = 0;
+            const questions = ['q1', 'q2', 'q3', 'q4'];
+            
+            questions.forEach(question => {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                if (selectedOption) {
+                    total += parseInt(selectedOption.value);
+                }
+            });
+
+            const resultBox = document.getElementById('resultBox');
+            resultBox.style.display = 'block';
+            
+            // Eliminar clases anteriores
+            resultBox.classList.remove('green-result', 'yellow-result', 'red-result');
+            
+            if (total === 4) {
+                resultBox.className = 'green-result';
+                resultBox.textContent = "No hi ha cap problema amb el joc. Segueix així!";
+            } else if (total === 5) {
+                resultBox.className = 'yellow-result';
+                resultBox.textContent = "Vigila! Potser hauries de controlar una mica més la teva conducta de joc.";
+            } else if (total >= 6 && total <= 8) {
+                resultBox.className = 'red-result';
+                resultBox.textContent = "Compte! La teva conducta de joc pot ser problemàtica. Demana ajuda!";
+            }
+        });
+    </script>
 </body>
 </html>
