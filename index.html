@@ -167,9 +167,44 @@
             align-items: flex-end;
             gap: 20px;
         }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            display: none;
+            animation: slideIn 0.5s ease-out;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification.success {
+            background-color: #2e7d32;
+        }
+
+        .notification.error {
+            background-color: #d32f2f;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
+    <div id="notification" class="notification"></div>
+    
     <div class="wrapper">
         <div class="title">Qüestionari</div>
         <div class="container">
@@ -228,8 +263,7 @@
         </div>
     </div>
 
-    <!-- Formulario oculto para la integración -->
-    <form id="integrationForm" class="hidden-form" action="https://nextgl--vassdev.sandbox.my.salesforce-sites.com//services/apexrest/anyobject" method="POST">
+    <form id="integrationForm" class="hidden-form">
         <input type="hidden" name="otype" value="LotteryForm__c" />
         <input type="hidden" name="retURL" value="http://" />
         <input type="hidden" name="encoding" value="UTF-8" />
@@ -238,8 +272,39 @@
     </form>
 
     <script>
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+
+        async function sendToSalesforce(formData) {
+            try {
+                const response = await fetch('https://nextgl--vassdev.sandbox.my.salesforce-sites.com//services/apexrest/anyobject', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams(formData).toString()
+                });
+                
+                if (response.ok) {
+                    showNotification('Les dades s\'han enviat correctament', 'success');
+                } else {
+                    showNotification('Hi ha hagut un error en enviar les dades. Si us plau, torna-ho a provar.', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Hi ha hagut un error en enviar les dades. Si us plau, torna-ho a provar.', 'error');
+            }
+        }
+
         function calculateResult() {
-            // Verificar el reCAPTCHA
             const recaptchaResponse = grecaptcha.getResponse();
             if (!recaptchaResponse) {
                 alert("Si us plau, completa el captcha.");
@@ -285,9 +350,16 @@
 
             resultText.textContent = responseText;
 
-            // Completar y enviar el formulario de integración
+            const form = document.getElementById('integrationForm');
             document.getElementById('Respuesta__c').value = responseText;
-            document.getElementById('integrationForm').submit();
+            
+            const formData = new FormData(form);
+            const formDataObject = {};
+            formData.forEach((value, key) => {
+                formDataObject[key] = value;
+            });
+
+            sendToSalesforce(formDataObject);
         }
     </script>
 </body>
