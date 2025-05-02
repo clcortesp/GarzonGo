@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="esp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qüestionari</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .wrapper {
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+        }
+
+        .title {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #e51937;
+            color: white;
+            padding: 8px 25px;
+            border-radius: 25px;
+            font-size: 24px;
+            z-index: 1;
+        }
+
+        .container {
+            background: #002060;
+            border-radius: 15px;
+            padding: 30px 30px 60px 30px;
+            color: white;
+        }
+
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+            padding-top: 10px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .header span {
+            margin-left: 100px;
+            font-weight: bold;
+        }
+
+        .question {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 15px;
+        }
+
+        .question-number {
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 20px;
+            min-width: 30px;
+        }
+
+        .question-text {
+            flex: 1;
+        }
+
+        .options {
+            display: flex;
+            gap: 80px;
+            margin-left: 20px;
+        }
+
+        input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .button-container {
+            text-align: right;
+            margin-top: 40px;
+        }
+
+        .submit-button {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .submit-button:hover {
+            background: #1b5e20;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="title">Qüestionari</div>
+        <div class="container">
+            <div class="header">
+                <span>Respostes:</span>
+                <span>No</span>
+                <span>Sí</span>
+            </div>
+            
+            <form>
+                <div class="question">
+                    <div class="question-number">1</div>
+                    <div class="question-text">Alguna vegada sents que hauries de restringir la teva conducta de joc d'atzar?</div>
+                    <div class="options">
+                        <input type="radio" name="q1" value="no">
+                        <input type="radio" name="q1" value="si">
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">2</div>
+                    <div class="question-text">Alguna vegada t'irriten les observacions de les altres persones sobre la teva condcuta amb els jocs d'atzar?</div>
+                    <div class="options">
+                        <input type="radio" name="q2" value="no">
+                        <input type="radio" name="q2" value="si">
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">3</div>
+                    <div class="question-text">Alguna vegada et sents culpable sobre alguna cosa que has fet quan jugaves?</div>
+                    <div class="options">
+                        <input type="radio" name="q3" value="no">
+                        <input type="radio" name="q3" value="si">
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">4</div>
+                    <div class="question-text">Alguna vegada, quan et lleves, vols començar a jugar inmediataments per sentir-te millor?</div>
+                    <div class="options">
+                        <input type="radio" name="q4" value="no">
+                        <input type="radio" name="q4" value="si">
+                    </div>
+                </div>
+                
+                <div class="button-container">
+                    <button type="submit" class="submit-button">Veure resposta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
