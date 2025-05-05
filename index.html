@@ -293,7 +293,7 @@
                     },
                     body: new URLSearchParams(formData).toString()
                 });
-                
+                console.log(response);
                 if (response.ok) {
                     showNotification('Les dades s\'han enviat correctament', 'success');
                 } else {
